@@ -1,8 +1,11 @@
 def word_calc (arg)
   input_array = arg.split(" ")
-  op_arr = ["plus","minus"]
+  op_arr = ["plus","minus","times","divided", "power"]
   num_arr = ["0","1","2","3","4","5","6","7","8","9"]
   useful_array = []
+  results = []
+  sum = 0
+  result_index = 0
 
 
   #split input string into words,
@@ -21,30 +24,62 @@ def word_calc (arg)
     end
   end
 
-  # for index in (0...useful_array.length)
-  #   if useful_array[index] == "plus"
-  #     x = useful_array[index - 1]
-  #     y = useful_array[index + 1]
-  #     result = x + y
-  #   end
-  #   if useful_array[index] == "minus"
-  #     x = useful_array[index - 1]
-  #     y = useful_array[index + 1]
-  #     result = x - y
-  #   end
-  # end
+  #search useful array for operator,
+  #grab numbers on either side,
+  #do operation
+
 
   useful_array.each_with_index { |item, index|
     if (item == "plus")
-      x = useful_array[index - 1]
-      y = useful_array[index + 1]
-      return x + y
+      if (sum != 0)
+        sum = sum + useful_array[index + 1]
+      else
+        x = useful_array[index - 1]
+        y = useful_array[index + 1]
+        sum = x + y
+      end
     end
     if (item == "minus")
-      x = useful_array[index - 1]
-      y = useful_array[index + 1]
-      return x - y
+      if (sum != 0)
+        sum = sum - useful_array[index + 1]
+      else
+        x = useful_array[index - 1]
+        y = useful_array[index + 1]
+        sum = x - y
+      end
+    end
+    if (item == "times")
+      if (sum != 0)
+        sum = sum * useful_array[index + 1]
+      else
+        x = useful_array[index - 1]
+        y = useful_array[index + 1]
+        sum = x * y
+      end
+    end
+    if (item == "divided")
+      if (sum != 0)
+        sum = sum / useful_array[index + 1]
+      else
+        x = useful_array[index - 1].to_f
+        y = useful_array[index + 1].to_f
+        sum = x / y
+      end
+    end
+    if (item == "power")
+      if (sum != 0)
+        sum = sum ** useful_array[index + 1]
+      else
+        x = useful_array[index - 2]
+        y = useful_array[index - 1]
+        sum = x ** y
+      end
     end
   }
+  #results.each do |result|
+  #  sum = sum + result
+  #end
+
+  return sum
 
 end
